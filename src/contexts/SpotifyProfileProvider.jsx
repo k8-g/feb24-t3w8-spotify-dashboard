@@ -73,7 +73,7 @@ export function SpotifyProfileProvider({children}){
 	}, [userAuthData]);
 
 	return (
-		<SpotifyProfileContext.Provider value={{profileData}}>
+		<SpotifyProfileContext.Provider value={{profileData, topTracks}}>
 			{children}
 		</SpotifyProfileContext.Provider>
 	)
