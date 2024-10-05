@@ -1,13 +1,17 @@
-
 #topTracksContainer {
 	display: flex;
 	flex-wrap: wrap;
+	justify-content: center; /* This centers the .trackCard horizontally */
+	text-align: center; /* This centers the text inside each .trackCard */
+}
 
-	.trackCard {
-		width: 200px;
+.trackCard {
+	width: 200px;
+	display: flex;
+	flex-direction: column; /* Stack elements vertically */
+	align-items: center; /* This centers the contents horizontally within the .trackCard */
 
-		img {
-			width: 100px;
-		}
+	img {
+		width: 100px;
 	}
 }
