@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react"
+import { createContext, useContext, useEffect, useState } from "react"
 import { useSpotifyAuthContext } from "./SpotifyAuthProvider";
 
 
@@ -30,11 +30,32 @@ export function SpotifyProfileProvider({children}){
 	let {userAuthData} = useSpotifyAuthContext();
 
 	async function fetchProfileData(accessToken){
-		const result = await fetch("")
+		const result = await fetch(
+			"https://api.spotify.com/v1/me",
+			{
+				method: "GET",
+				headers: {
+					Authorization: `Bearer ${accessToken}`
+				}
+			}
+		);
+
+		return await result.json();
 	}
 
+	useEffect(() => {
+		// if authdata has an access token, start making fetch requests
+		if (userAuthData && userAuthData.access_token){
+			fetchProfileData(userAuthData.access_token).then(profileData => {
+				setProfileData(profileData);
+			});
+		}
+
+		// whenever auth data changes, check it and maybe make fetch request
+	}, [userAuthData]);
+
 	return (
-		<SpotifyProfileContext.Provider>
+		<SpotifyProfileContext.Provider value={profileData}>
 			{children}
 		</SpotifyProfileContext.Provider>
 	)
